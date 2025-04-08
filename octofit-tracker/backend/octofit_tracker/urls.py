@@ -18,6 +18,14 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from .views import UserViewSet, TeamViewSet, ActivityViewSet, LeaderboardViewSet, WorkoutViewSet
+from django.http import JsonResponse
+
+def api_root(request):
+    return JsonResponse({
+        "message": "Welcome to the OctoFit Tracker API!",
+        "codespace_url": "https://crispy-cod-pjw56rxv49qr29w4j-8000.app.github.dev",
+        "localhost_url": "http://localhost:8000"
+    })
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -30,4 +38,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('', include(router.urls)),
+]
+
+urlpatterns += [
+    path('', api_root, name='api_root'),
 ]
